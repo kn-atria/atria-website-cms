@@ -5,6 +5,10 @@ export const adsPage = defineType({
   title: 'Ads Landing Page',
   type: 'document',
 
+  preview: {
+    select: {title: 'title'},
+  },
+
   groups: [
     {name: 'hero', title: 'Hero Section'},
     {name: 'whyUs', title: 'Why Us'},
@@ -24,6 +28,14 @@ export const adsPage = defineType({
   ],
 
   fields: [
+    defineField({
+      name: 'title',
+      title: 'Page Title',
+      type: 'string',
+      description: 'Used as the display name in Studio (e.g. "Ads Landing Page - Google")',
+      validation: (rule) => rule.required(),
+    }),
+
     // ═══════════════════════════════════════════
     // HERO SECTION
     // ═══════════════════════════════════════════
@@ -54,13 +66,15 @@ export const adsPage = defineType({
         defineField({
           name: 'heading',
           title: 'Heading',
-          type: 'text',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "Go Solar. Save Up to 95%* on Your Electricity Bill."',
         }),
         defineField({
           name: 'subheading',
           title: 'Subheading',
-          type: 'text',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "Made for Bengaluru homes — clear pricing..."',
         }),
         defineField({
@@ -71,10 +85,21 @@ export const adsPage = defineType({
             defineArrayMember({
               type: 'object',
               fields: [
-                defineField({name: 'text', title: 'Text', type: 'string'}),
+                defineField({
+                  name: 'text',
+                  title: 'Text',
+                  type: 'array',
+                  of: [defineArrayMember({type: 'block'})],
+                }),
+                defineField({name: 'logo', title: 'Logo', type: 'image'}),
               ],
               preview: {
-                select: {title: 'text'},
+                select: {title: 'text', media: 'logo'},
+                prepare({title, media}) {
+                  // Extract plain text from the first block for preview
+                  const plainText = title?.[0]?.children?.map((c: {text: string}) => c.text).join('') || 'Untitled'
+                  return {title: plainText, media}
+                },
               },
             }),
           ],
@@ -90,13 +115,15 @@ export const adsPage = defineType({
         defineField({
           name: 'formHeading',
           title: 'Form Heading',
-          type: 'string',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "Is your rooftop solar-ready?"',
         }),
         defineField({
           name: 'formSubheading',
           title: 'Form Subheading',
-          type: 'string',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "Enter your PIN code to find out..."',
         }),
       ],
@@ -132,7 +159,12 @@ export const adsPage = defineType({
               type: 'object',
               fields: [
                 defineField({name: 'heading', title: 'Heading', type: 'string'}),
-                defineField({name: 'description', title: 'Description', type: 'text'}),
+                defineField({
+                  name: 'description',
+                  title: 'Description',
+                  type: 'array',
+                  of: [defineArrayMember({type: 'block'})],
+                }),
                 defineField({name: 'icon', title: 'Icon', type: 'image'}),
                 defineField({name: 'image', title: 'Image', type: 'image'}),
               ],
@@ -177,30 +209,17 @@ export const adsPage = defineType({
               type: 'object',
               fields: [
                 defineField({name: 'name', title: 'Customer Name', type: 'string'}),
-                defineField({name: 'stats', title: 'Stats Line', type: 'string', description: 'e.g. "Reduced 3,449.25 kg CO2 | Saved 158 trees"'}),
+                defineField({
+                  name: 'stats',
+                  title: 'Stats Line',
+                  type: 'array',
+                  of: [defineArrayMember({type: 'block'})],
+                  description: 'e.g. "Reduced 3,449.25 kg CO2 | Saved 158 trees"',
+                }),
                 defineField({name: 'image', title: 'Customer Photo', type: 'image'}),
               ],
               preview: {
-                select: {title: 'name', subtitle: 'stats', media: 'image'},
-              },
-            }),
-          ],
-        }),
-        defineField({
-          name: 'processSteps',
-          title: 'Process Timeline Steps',
-          description: 'Installation process steps (Day 01, Day 02, Day 03 etc.)',
-          type: 'array',
-          of: [
-            defineArrayMember({
-              type: 'object',
-              fields: [
-                defineField({name: 'day', title: 'Day Label', type: 'string', description: 'e.g. "DAY 01"'}),
-                defineField({name: 'title', title: 'Step Title', type: 'string', description: 'e.g. "Consultation and Booking"'}),
-                defineField({name: 'icon', title: 'Step Icon', type: 'image'}),
-              ],
-              preview: {
-                select: {title: 'title', subtitle: 'day', media: 'icon'},
+                select: {title: 'name', media: 'image'},
               },
             }),
           ],
@@ -215,13 +234,15 @@ export const adsPage = defineType({
         defineField({
           name: 'ctaHeading',
           title: 'CTA Heading',
-          type: 'string',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "Atria\'s 50+ year legacy speaks for itself"',
         }),
         defineField({
           name: 'ctaSubheading',
           title: 'CTA Subheading',
-          type: 'string',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "Cut your electricity bills by 95%*."',
         }),
         defineField({
@@ -264,7 +285,8 @@ export const adsPage = defineType({
         defineField({
           name: 'heading',
           title: 'Section Heading',
-          type: 'string',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "FAQ\'s"',
         }),
         defineField({
@@ -276,7 +298,12 @@ export const adsPage = defineType({
               type: 'object',
               fields: [
                 defineField({name: 'question', title: 'Question', type: 'string'}),
-                defineField({name: 'answer', title: 'Answer', type: 'text'}),
+                defineField({
+                  name: 'answer',
+                  title: 'Answer',
+                  type: 'array',
+                  of: [defineArrayMember({type: 'block'})],
+                }),
               ],
               preview: {
                 select: {title: 'question'},
@@ -311,7 +338,8 @@ export const adsPage = defineType({
         defineField({
           name: 'heading',
           title: 'Section Heading',
-          type: 'string',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "The Atria Advantage"',
         }),
         defineField({
@@ -359,13 +387,15 @@ export const adsPage = defineType({
         defineField({
           name: 'heading',
           title: 'Heading',
-          type: 'string',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "Ready to power your home with confidence?"',
         }),
         defineField({
           name: 'subheading',
           title: 'Subheading',
-          type: 'string',
+          type: 'array',
+          of: [defineArrayMember({type: 'block'})],
           description: 'e.g. "Get a site assessment today. No pressure. Just clarity."',
         }),
         defineField({
