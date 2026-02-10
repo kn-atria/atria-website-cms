@@ -15,7 +15,7 @@
 /logs
 *.log
 
-# Coverage directory used by testing tools
+# Coverage directory used by testing tools.
 /coverage
 
 # Misc
