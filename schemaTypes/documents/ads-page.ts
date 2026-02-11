@@ -1,4 +1,4 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import { defineType, defineField, defineArrayMember } from 'sanity'
 
 export const adsPage = defineType({
   name: 'adsPage',
@@ -6,25 +6,25 @@ export const adsPage = defineType({
   type: 'document',
 
   preview: {
-    select: {title: 'title'},
+    select: { title: 'title' },
   },
 
   groups: [
-    {name: 'hero', title: 'Hero Section'},
-    {name: 'whyUs', title: 'Why Us'},
-    {name: 'testimonials', title: 'Testimonials & Process'},
-    {name: 'faq', title: 'FAQ Section'},
-    {name: 'comparison', title: 'Comparison Section'},
-    {name: 'cta', title: 'CTA Section'},
+    { name: 'hero', title: 'Hero Section' },
+    { name: 'whyUs', title: 'Why Us' },
+    { name: 'testimonials', title: 'Testimonials & Process' },
+    { name: 'faq', title: 'FAQ Section' },
+    { name: 'comparison', title: 'Comparison Section' },
+    { name: 'cta', title: 'CTA Section' },
   ],
 
   fieldsets: [
-    {name: 'hero', title: '🟢 Hero Section'},
-    {name: 'whyUs', title: '🟢 Why Us'},
-    {name: 'testimonials', title: '🟢 Testimonials & Process'},
-    {name: 'faq', title: '🟢 FAQ Section'},
-    {name: 'comparison', title: '🟢 Comparison Section'},
-    {name: 'cta', title: '🟢 CTA Section'},
+    { name: 'hero', title: '🟢 Hero Section' },
+    { name: 'whyUs', title: '🟢 Why Us' },
+    { name: 'testimonials', title: '🟢 Testimonials & Process' },
+    { name: 'faq', title: '🟢 FAQ Section' },
+    { name: 'comparison', title: '🟢 Comparison Section' },
+    { name: 'cta', title: '🟢 CTA Section' },
   ],
 
   fields: [
@@ -33,6 +33,15 @@ export const adsPage = defineType({
       title: 'Page Title',
       type: 'string',
       description: 'Used as the display name in Studio (e.g. "Ads Landing Page - Google")',
+      validation: (rule) => rule.required(),
+    }),
+
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      description: 'URL-friendly identifier (auto-generated from title)',
+      options: { source: 'title', maxLength: 96 },
       validation: (rule) => rule.required(),
     }),
 
@@ -55,7 +64,7 @@ export const adsPage = defineType({
       type: 'object',
       group: 'hero',
       fieldset: 'hero',
-      hidden: ({parent}) => !parent?.heroVisible,
+      hidden: ({ parent }) => !parent?.heroVisible,
       fields: [
         defineField({
           name: 'badge',
@@ -67,14 +76,14 @@ export const adsPage = defineType({
           name: 'heading',
           title: 'Heading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Go Solar. Save Up to 95%* on Your Electricity Bill."',
         }),
         defineField({
           name: 'subheading',
           title: 'Subheading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Made for Bengaluru homes — clear pricing..."',
         }),
         defineField({
@@ -89,16 +98,16 @@ export const adsPage = defineType({
                   name: 'text',
                   title: 'Text',
                   type: 'array',
-                  of: [defineArrayMember({type: 'block'})],
+                  of: [defineArrayMember({ type: 'block' })],
                 }),
-                defineField({name: 'logo', title: 'Logo', type: 'image'}),
+                defineField({ name: 'logo', title: 'Logo', type: 'image' }),
               ],
               preview: {
-                select: {title: 'text', media: 'logo'},
-                prepare({title, media}) {
+                select: { title: 'text', media: 'logo' },
+                prepare({ title, media }) {
                   // Extract plain text from the first block for preview
-                  const plainText = title?.[0]?.children?.map((c: {text: string}) => c.text).join('') || 'Untitled'
-                  return {title: plainText, media}
+                  const plainText = title?.[0]?.children?.map((c: { text: string }) => c.text).join('') || 'Untitled'
+                  return { title: plainText, media }
                 },
               },
             }),
@@ -109,21 +118,21 @@ export const adsPage = defineType({
           name: 'backgroundVideo',
           title: 'Background Video',
           type: 'file',
-          options: {accept: 'video/*'},
+          options: { accept: 'video/*' },
           description: 'Background video for the hero section',
         }),
         defineField({
           name: 'formHeading',
           title: 'Form Heading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Is your rooftop solar-ready?"',
         }),
         defineField({
           name: 'formSubheading',
           title: 'Form Subheading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Enter your PIN code to find out..."',
         }),
       ],
@@ -148,7 +157,7 @@ export const adsPage = defineType({
       type: 'object',
       group: 'whyUs',
       fieldset: 'whyUs',
-      hidden: ({parent}) => !parent?.whyUsVisible,
+      hidden: ({ parent }) => !parent?.whyUsVisible,
       fields: [
         defineField({
           name: 'items',
@@ -158,18 +167,18 @@ export const adsPage = defineType({
             defineArrayMember({
               type: 'object',
               fields: [
-                defineField({name: 'heading', title: 'Heading', type: 'string'}),
+                defineField({ name: 'heading', title: 'Heading', type: 'string' }),
                 defineField({
                   name: 'description',
                   title: 'Description',
                   type: 'array',
-                  of: [defineArrayMember({type: 'block'})],
+                  of: [defineArrayMember({ type: 'block' })],
                 }),
-                defineField({name: 'icon', title: 'Icon', type: 'image'}),
-                defineField({name: 'image', title: 'Image', type: 'image'}),
+                defineField({ name: 'icon', title: 'Icon', type: 'image' }),
+                defineField({ name: 'image', title: 'Image', type: 'image' }),
               ],
               preview: {
-                select: {title: 'heading', media: 'icon'},
+                select: { title: 'heading', media: 'icon' },
               },
             }),
           ],
@@ -197,7 +206,7 @@ export const adsPage = defineType({
       type: 'object',
       group: 'testimonials',
       fieldset: 'testimonials',
-      hidden: ({parent}) => !parent?.testimonialsVisible,
+      hidden: ({ parent }) => !parent?.testimonialsVisible,
       fields: [
         defineField({
           name: 'customers',
@@ -208,18 +217,18 @@ export const adsPage = defineType({
             defineArrayMember({
               type: 'object',
               fields: [
-                defineField({name: 'name', title: 'Customer Name', type: 'string'}),
+                defineField({ name: 'name', title: 'Customer Name', type: 'string' }),
                 defineField({
                   name: 'stats',
                   title: 'Stats Line',
                   type: 'array',
-                  of: [defineArrayMember({type: 'block'})],
+                  of: [defineArrayMember({ type: 'block' })],
                   description: 'e.g. "Reduced 3,449.25 kg CO2 | Saved 158 trees"',
                 }),
-                defineField({name: 'image', title: 'Customer Photo', type: 'image'}),
+                defineField({ name: 'image', title: 'Customer Photo', type: 'image' }),
               ],
               preview: {
-                select: {title: 'name', media: 'image'},
+                select: { title: 'name', media: 'image' },
               },
             }),
           ],
@@ -228,21 +237,21 @@ export const adsPage = defineType({
           name: 'video',
           title: 'Section Video',
           type: 'file',
-          options: {accept: 'video/*'},
+          options: { accept: 'video/*' },
           description: 'Video displayed on the right side of this section',
         }),
         defineField({
           name: 'ctaHeading',
           title: 'CTA Heading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Atria\'s 50+ year legacy speaks for itself"',
         }),
         defineField({
           name: 'ctaSubheading',
           title: 'CTA Subheading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Cut your electricity bills by 95%*."',
         }),
         defineField({
@@ -256,7 +265,7 @@ export const adsPage = defineType({
           title: 'CTA Button Link',
           type: 'url',
           validation: (rule) =>
-            rule.uri({allowRelative: true, scheme: ['http', 'https', 'tel', 'mailto']}),
+            rule.uri({ allowRelative: true, scheme: ['http', 'https', 'tel', 'mailto'] }),
         }),
       ],
     }),
@@ -280,13 +289,13 @@ export const adsPage = defineType({
       type: 'object',
       group: 'faq',
       fieldset: 'faq',
-      hidden: ({parent}) => !parent?.faqVisible,
+      hidden: ({ parent }) => !parent?.faqVisible,
       fields: [
         defineField({
           name: 'heading',
           title: 'Section Heading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "FAQ\'s"',
         }),
         defineField({
@@ -297,16 +306,16 @@ export const adsPage = defineType({
             defineArrayMember({
               type: 'object',
               fields: [
-                defineField({name: 'question', title: 'Question', type: 'string'}),
+                defineField({ name: 'question', title: 'Question', type: 'string' }),
                 defineField({
                   name: 'answer',
                   title: 'Answer',
                   type: 'array',
-                  of: [defineArrayMember({type: 'block'})],
+                  of: [defineArrayMember({ type: 'block' })],
                 }),
               ],
               preview: {
-                select: {title: 'question'},
+                select: { title: 'question' },
               },
             }),
           ],
@@ -333,13 +342,19 @@ export const adsPage = defineType({
       type: 'object',
       group: 'comparison',
       fieldset: 'comparison',
-      hidden: ({parent}) => !parent?.comparisonVisible,
+      hidden: ({ parent }) => !parent?.comparisonVisible,
       fields: [
+        defineField({
+          name: 'backgroundImage',
+          title: 'Background Image',
+          type: 'image',
+          description: 'Background image for the comparison section',
+        }),
         defineField({
           name: 'heading',
           title: 'Section Heading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "The Atria Advantage"',
         }),
         defineField({
@@ -350,12 +365,12 @@ export const adsPage = defineType({
             defineArrayMember({
               type: 'object',
               fields: [
-                defineField({name: 'feature', title: 'Feature', type: 'string'}),
-                defineField({name: 'atriaSolar', title: 'Atria Solar', type: 'string'}),
-                defineField({name: 'otherEpcs', title: 'Other EPCs', type: 'string'}),
+                defineField({ name: 'feature', title: 'Feature', type: 'string' }),
+                defineField({ name: 'atriaSolar', title: 'Atria Solar', type: 'string' }),
+                defineField({ name: 'otherEpcs', title: 'Other EPCs', type: 'string' }),
               ],
               preview: {
-                select: {title: 'feature', subtitle: 'atriaSolar'},
+                select: { title: 'feature', subtitle: 'atriaSolar' },
               },
             }),
           ],
@@ -382,20 +397,20 @@ export const adsPage = defineType({
       type: 'object',
       group: 'cta',
       fieldset: 'cta',
-      hidden: ({parent}) => !parent?.ctaVisible,
+      hidden: ({ parent }) => !parent?.ctaVisible,
       fields: [
         defineField({
           name: 'heading',
           title: 'Heading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Ready to power your home with confidence?"',
         }),
         defineField({
           name: 'subheading',
           title: 'Subheading',
           type: 'array',
-          of: [defineArrayMember({type: 'block'})],
+          of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Get a site assessment today. No pressure. Just clarity."',
         }),
         defineField({
@@ -410,7 +425,7 @@ export const adsPage = defineType({
           type: 'url',
           description: 'e.g. "tel:+919901100428"',
           validation: (rule) =>
-            rule.uri({allowRelative: true, scheme: ['http', 'https', 'tel', 'mailto']}),
+            rule.uri({ allowRelative: true, scheme: ['http', 'https', 'tel', 'mailto'] }),
         }),
       ],
     }),
