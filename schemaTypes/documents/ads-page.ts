@@ -45,6 +45,14 @@ export const adsPage = defineType({
       validation: (rule) => rule.required(),
     }),
 
+    defineField({
+      name: 'enableChatbot',
+      title: 'Enable Chatbot',
+      type: 'boolean',
+      description: 'Toggle to show or hide the chatbot on this page',
+      initialValue: false,
+    }),
+
     // ═══════════════════════════════════════════
     // HERO SECTION
     // ═══════════════════════════════════════════
@@ -71,6 +79,18 @@ export const adsPage = defineType({
           title: 'Badge Text',
           type: 'string',
           description: 'e.g. "FROM THE FOUNDERS OF"',
+        }),
+        defineField({
+          name: 'badgeLogos',
+          title: 'Badge Logos',
+          type: 'array',
+          of: [
+            defineArrayMember({
+              type: 'image',
+              options: { hotspot: true },
+            }),
+          ],
+          description: 'Logos displayed next to the badge text (e.g. founder company logos)',
         }),
         defineField({
           name: 'heading',
