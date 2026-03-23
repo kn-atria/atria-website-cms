@@ -15,10 +15,10 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/vision": "^5.9.0",
+    "@sanity/vision": "^5.16.0",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^5.9.0",
+    "sanity": "^5.16.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
@@ -33,5 +33,6 @@
     "printWidth": 100,
     "bracketSpacing": false,
     "singleQuote": true
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
