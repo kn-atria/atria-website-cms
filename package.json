@@ -9,7 +9,9 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "deploy-graphql": "sanity graphql deploy",
+    "dev-backup": "mkdir -p backups && npm exec sanity dataset export development \"backups/development-$(date +%d-%m-%Y).tar.gz\"",
+    "prod-backup": "mkdir -p backups && npm exec sanity dataset export production \"backups/production-$(date +%d-%m-%Y).tar.gz\""
   },
   "keywords": [
     "sanity"
