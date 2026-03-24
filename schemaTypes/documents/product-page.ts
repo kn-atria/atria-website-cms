@@ -74,6 +74,14 @@ export const productPage = defineType({
                   validation: (rule) => rule.required(),
                 }),
                 defineField({
+                  name: 'navbarImage',
+                  title: 'Navbar Image',
+                  type: 'image',
+                  description: 'Used for the product item image in header navbar',
+                  options: { hotspot: true },
+                  validation: (rule) => rule.required(),
+                }),
+                defineField({
                   name: 'cta',
                   title: 'Certificate CTA',
                   type: 'object',
@@ -98,8 +106,16 @@ export const productPage = defineType({
               preview: {
                 select: {
                   title: 'title',
-                  media: 'largeScreenImage',
+                  media: 'navbarImage',
+                  fallbackMedia: 'largeScreenImage',
                   subtitle: 'slug.current',
+                },
+                prepare({ title, media, fallbackMedia, subtitle }) {
+                  return {
+                    title,
+                    subtitle,
+                    media: media || fallbackMedia,
+                  }
                 },
               },
             }),
