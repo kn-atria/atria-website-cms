@@ -155,6 +155,24 @@ export const adsPage = defineType({
           of: [defineArrayMember({ type: 'block' })],
           description: 'e.g. "Enter your PIN code to find out..."',
         }),
+        defineField({
+          name: 'pincodes',
+          title: 'Applicable Pincodes',
+          type: 'array',
+          of: [
+            defineArrayMember({
+              type: 'string',
+              validation: (Rule) => Rule.regex(/^\d{6}$/).error('Enter a valid 6-digit pincode'),
+            }),
+          ],
+          validation: (Rule) => Rule.unique(),
+          description: 'Add the list of serviceable 6-digit pincodes',
+        }),
+        defineField({
+          name: 'errorMessage',
+          title: 'Error Message',
+          type: 'text',
+        }),
       ],
     }),
 
