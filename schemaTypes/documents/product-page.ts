@@ -77,9 +77,8 @@ export const productPage = defineType({
                   name: 'navbarImage',
                   title: 'Navbar Image',
                   type: 'image',
-                  description: 'Used for the product item image in header navbar',
+                  description: 'Optional image for the product item in the header navbar',
                   options: { hotspot: true },
-                  validation: (rule) => rule.required(),
                 }),
                 defineField({
                   name: 'cta',
